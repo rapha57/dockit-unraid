@@ -1,0 +1,47 @@
+<Container version="2">
+  <Name>Dockit</Name>
+  <Repository>ghcr.io/rapha57/dockit:latest</Repository>
+  <Registry>https://ghcr.io</Registry>
+  <Network>bridge</Network>
+  <MyIP/>
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Icon>https://raw.githubusercontent.com/rapha57/dockit-unraid/main/icons/dockit.png</Icon>
+  <WebUI>http://[IP]:[PORT:3000]/</WebUI>
+  <Overview>Pin your URLs. One page for the tools the team actually opens. Self-hosted, one JSON file, no database.</Overview>
+  <Description>
+Dockit is a shared home page for the web tools and apps a team actually uses, organised by space, category and card.
+
+The portal lives in one file on the appdata share. Backup = copy that folder.
+
+HTTP link probes work with no extra privileges. ICMP (ping) needs Extra Parameters: --cap-add=NET_RAW. On a locked-down Unraid / remote host you can leave that off.
+
+SSO client secret and LDAP bind password: paste them in Dockit Settings, or set the optional environment variables below (fields in Settings then stay empty). Local login always remains.
+  </Description>
+  <Support>https://github.com/rapha57/dockit/issues</Support>
+  <Project>https://github.com/rapha57/dockit</Project>
+  <TemplateURL>https://raw.githubusercontent.com/rapha57/dockit-unraid/main/templates/dockit.xml</TemplateURL>
+  <ReadMe>https://raw.githubusercontent.com/rapha57/dockit-unraid/main/README.md</ReadMe>
+  <DonateLink>https://www.buymeacoffee.com/rapha57</DonateLink>
+  <DonateText>Buy me a coffee</DonateText>
+  <Category>Tools:Utilities</Category>
+  <ExtraSearchTerms>portal urls bookmarks intranet dashboard homelab</ExtraSearchTerms>
+  <Requires>A strong PORTAL_EDIT_PASSWORD (12 characters or more).</Requires>
+  <Changes>Initial Unraid template. Image ghcr.io/rapha57/dockit.</Changes>
+  <Date>2026-09-16</Date>
+  <MinVer>6.12</MinVer>
+  <License>MIT</License>
+  <Screenshot>https://raw.githubusercontent.com/rapha57/dockit/main/screenshots/screen_001.png</Screenshot>
+
+  <Config Name="WebUI" Target="3000" Default="3000" Mode="tcp" Description="Dockit web interface." Type="Port" Display="always" Required="true" Mask="false"/>
+  <Config Name="Appdata" Target="/app/data" Default="/mnt/user/appdata/dockit" Mode="rw" Description="portal.json, curation and uploaded assets. Backup this folder." Type="Path" Display="always" Required="true" Mask="false"/>
+
+  <Config Name="Edit password" Target="PORTAL_EDIT_PASSWORD" Default="" Description="Required. 12 characters or more. First login is this password for user admin (or Edit user below)." Type="Variable" Display="always" Required="true" Mask="true"/>
+  <Config Name="Edit user" Target="PORTAL_EDIT_USER" Default="admin" Description="Local owner username. Default admin." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+
+  <Config Name="Public origin" Target="PORTAL_PUBLIC_ORIGIN" Default="" Description="Public URL if behind a reverse proxy, e.g. https://portal.example. Leave empty on the LAN." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Trust proxy" Target="PORTAL_TRUST_PROXY" Default="" Description="Set to 1 when behind a reverse proxy so Dockit honours X-Forwarded-* headers." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+
+  <Config Name="OIDC client secret" Target="PORTAL_OIDC_CLIENT_SECRET" Default="" Description="Optional. If set, the SSO secret is not stored in portal.json. Otherwise paste it in Dockit Settings." Type="Variable" Display="advanced" Required="false" Mask="true"/>
+  <Config Name="LDAP bind password" Target="PORTAL_LDAP_BIND_PASSWORD" Default="" Description="Optional. One bind password for every directory. Different accounts: leave this empty and use PORTAL_LDAP_BIND_PASSWORD_&lt;ID&gt;, or paste in Settings." Type="Variable" Display="advanced" Required="false" Mask="true"/>
+</Container>

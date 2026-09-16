@@ -1,0 +1,14 @@
+<CommunityApplications>
+  <Profile>
+Templates for **Dockit** — Pin your URLs. One shared page for the tools a team actually opens. Self-hosted, one JSON file, no database.
+
+Support: [github.com/rapha57/dockit/issues](https://github.com/rapha57/dockit/issues)
+
+Project: [github.com/rapha57/dockit](https://github.com/rapha57/dockit)
+  </Profile>
+  <Icon>https://raw.githubusercontent.com/rapha57/dockit-unraid/main/icons/dockit.png</Icon>
+  <WebPage>https://github.com/rapha57/dockit</WebPage>
+  <DonateLink>https://www.buymeacoffee.com/rapha57</DonateLink>
+  <DonateText>Buy me a coffee</DonateText>
+  <Photo>https://raw.githubusercontent.com/rapha57/dockit/main/screenshots/screen_001.png</Photo>
+</CommunityApplications>
