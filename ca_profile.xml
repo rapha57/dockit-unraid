@@ -1,6 +1,8 @@
 <CommunityApplications>
   <Profile>
-Templates for **Dockit** — Pin your URLs. One shared page for the tools a team actually opens. Self-hosted, one JSON file, no database.
+**Dockit** — Pin your URLs.
+
+A shared home page for the web tools a team actually opens (Grafana, Proxmox, GitLab, firewall, wiki…), organised by space, category and card. Self-hosted, one JSON file in appdata, no database.
 
 Support: [github.com/rapha57/dockit/issues](https://github.com/rapha57/dockit/issues)
 

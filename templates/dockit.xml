@@ -6,17 +6,18 @@
   <MyIP/>
   <Shell>sh</Shell>
   <Privileged>false</Privileged>
+  <ExtraParams>--user 0</ExtraParams>
   <Icon>https://raw.githubusercontent.com/rapha57/dockit-unraid/main/icons/dockit.png</Icon>
   <WebUI>http://[IP]:[PORT:3000]/</WebUI>
-  <Overview>Pin your URLs. One page for the tools the team actually opens. Self-hosted, one JSON file, no database.</Overview>
+  <Overview>Pin your URLs. A shared home page for the tools your team actually opens — Grafana, Proxmox, GitLab, the firewall, the wiki — organised by space, category and card.[br][br]Self-hosted on Unraid. One JSON file in appdata, no database. Backup = copy the folder. Local login always works; LDAP / AD and OIDC (Keycloak, Authentik, Authelia) are optional.</Overview>
   <Description>
-Dockit is a shared home page for the web tools and apps a team actually uses, organised by space, category and card.
+IT teams live in dozens of consoles, monitors and wikis. The links scatter across bookmarks, chat and mail. Dockit pins them on one page the whole team shares, organised by space, category and card (app, note, or embed).
 
-The portal lives in one file on the appdata share. Backup = copy that folder.
+The portal is one JSON file on the appdata share. No database. Backup or move = copy that folder.
 
-HTTP link probes work with no extra privileges. ICMP (ping) needs Extra Parameters: --cap-add=NET_RAW. On a locked-down Unraid / remote host you can leave that off.
+First start: set Edit password (12+ characters). Sign in as admin with that password. HTTP link checks need no extra privileges. ICMP (ping) needs Extra Parameters: --user 0 --cap-add=NET_RAW (keep --user 0). You can leave ping off.
 
-SSO client secret and LDAP bind password: paste them in Dockit Settings, or set the optional environment variables below (fields in Settings then stay empty). Local login always remains.
+SSO client secret and LDAP bind password: paste them in Dockit Settings, or set the optional variables below. Local login always remains.
   </Description>
   <Support>https://github.com/rapha57/dockit/issues</Support>
   <Project>https://github.com/rapha57/dockit</Project>
@@ -25,16 +26,18 @@ SSO client secret and LDAP bind password: paste them in Dockit Settings, or set 
   <DonateLink>https://www.buymeacoffee.com/rapha57</DonateLink>
   <DonateText>Buy me a coffee</DonateText>
   <Category>Tools:Utilities</Category>
-  <ExtraSearchTerms>portal urls bookmarks intranet dashboard homelab</ExtraSearchTerms>
+  <ExtraSearchTerms>portal urls bookmarks intranet dashboard homelab grafana proxmox</ExtraSearchTerms>
   <Requires>A strong PORTAL_EDIT_PASSWORD (12 characters or more).</Requires>
-  <Changes>Initial Unraid template. Image ghcr.io/rapha57/dockit.</Changes>
-  <Date>2026-09-16</Date>
+  <Changes>Appdata permissions: PUID/PGID (default 99:100) and --user 0 so the entrypoint can chown then drop. Clearer store overview.</Changes>
+  <Date>2026-09-17</Date>
   <MinVer>6.12</MinVer>
   <License>MIT</License>
   <Screenshot>https://raw.githubusercontent.com/rapha57/dockit/main/screenshots/screen_001.png</Screenshot>
 
   <Config Name="WebUI" Target="3000" Default="3000" Mode="tcp" Description="Dockit web interface." Type="Port" Display="always" Required="true" Mask="false"/>
-  <Config Name="Appdata" Target="/app/data" Default="/mnt/user/appdata/dockit" Mode="rw" Description="portal.json, curation and uploaded assets. Backup this folder." Type="Path" Display="always" Required="true" Mask="false"/>
+  <Config Name="Appdata" Target="/app/data" Default="/mnt/user/appdata/dockit" Mode="rw" Description="portal.json, curation and uploaded assets. Writable by PUID:PGID (default 99:100). Backup this folder." Type="Path" Display="always" Required="true" Mask="false"/>
+  <Config Name="PUID" Target="PUID" Default="99" Mode="" Description="User id that owns appdata. Unraid nobody is 99. Leave at 99 unless you know you need another uid." Type="Variable" Display="always" Required="false" Mask="false">99</Config>
+  <Config Name="PGID" Target="PGID" Default="100" Mode="" Description="Group id that owns appdata. Unraid users is 100." Type="Variable" Display="always" Required="false" Mask="false">100</Config>
 
   <Config Name="Edit password" Target="PORTAL_EDIT_PASSWORD" Default="" Description="Required. 12 characters or more. First login is this password for user admin (or Edit user below)." Type="Variable" Display="always" Required="true" Mask="true"/>
   <Config Name="Edit user" Target="PORTAL_EDIT_USER" Default="admin" Description="Local owner username. Default admin." Type="Variable" Display="advanced" Required="false" Mask="false"/>
