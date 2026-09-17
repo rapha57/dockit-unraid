@@ -19,15 +19,12 @@ WebUI: `http://[IP]:3000/` — sign in as `admin` with that password.
 | WebUI | port **3000** |
 | Appdata | `/mnt/user/appdata/dockit` → `/app/data` (rw) |
 | PUID / PGID | `99` / `100` (Unraid `nobody:users`) |
-| Extra Parameters | `--user 0` (entrypoint chowns appdata, then drops to PUID) |
 | Edit password | `PORTAL_EDIT_PASSWORD` (required) |
 | Edit user | `PORTAL_EDIT_USER` (default `admin`) |
 | Public origin / Trust proxy | reverse proxy |
 | OIDC / LDAP bind | optional; otherwise configure inside Dockit |
 
-Keep `--user 0` in Extra Parameters. If you add ICMP (ping), use `--user 0 --cap-add=NET_RAW`. HTTP probes work without `NET_RAW`.
-
-Do not run the container as root for the whole process: `--user 0` is only so the entrypoint can fix appdata ownership.
+The image starts as root, chowns appdata to PUID:PGID, then drops. A Force Update is enough; no Extra Parameters. ICMP (ping): `--cap-add=NET_RAW`. HTTP probes work without it.
 
 ## Support
 

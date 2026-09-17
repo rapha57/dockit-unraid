@@ -6,7 +6,6 @@
   <MyIP/>
   <Shell>sh</Shell>
   <Privileged>false</Privileged>
-  <ExtraParams>--user 0</ExtraParams>
   <Icon>https://raw.githubusercontent.com/rapha57/dockit-unraid/main/icons/dockit.png</Icon>
   <WebUI>http://[IP]:[PORT:3000]/</WebUI>
   <Overview>Pin your URLs. A shared home page for the tools your team actually opens — Grafana, Proxmox, GitLab, the firewall, the wiki — organised by space, category and card.[br][br]Self-hosted on Unraid. One JSON file in appdata, no database. Backup = copy the folder. Local login always works; LDAP / AD and OIDC (Keycloak, Authentik, Authelia) are optional.</Overview>
@@ -15,7 +14,7 @@ IT teams live in dozens of consoles, monitors and wikis. The links scatter acros
 
 The portal is one JSON file on the appdata share. No database. Backup or move = copy that folder.
 
-First start: set Edit password (12+ characters). Sign in as admin with that password. HTTP link checks need no extra privileges. ICMP (ping) needs Extra Parameters: --user 0 --cap-add=NET_RAW (keep --user 0). You can leave ping off.
+First start: set Edit password (12+ characters). Sign in as admin with that password. HTTP link checks need no extra privileges. ICMP (ping) needs Extra Parameters: --cap-add=NET_RAW. You can leave ping off.
 
 SSO client secret and LDAP bind password: paste them in Dockit Settings, or set the optional variables below. Local login always remains.
   </Description>
@@ -28,7 +27,7 @@ SSO client secret and LDAP bind password: paste them in Dockit Settings, or set 
   <Category>Tools:Utilities</Category>
   <ExtraSearchTerms>portal urls bookmarks intranet dashboard homelab grafana proxmox</ExtraSearchTerms>
   <Requires>A strong PORTAL_EDIT_PASSWORD (12 characters or more).</Requires>
-  <Changes>Appdata permissions: PUID/PGID (default 99:100) and --user 0 so the entrypoint can chown then drop. Clearer store overview.</Changes>
+  <Changes>Image starts as root, chowns appdata to PUID:PGID (99:100), then drops. Force Update is enough — no Extra Parameters required.</Changes>
   <Date>2026-09-17</Date>
   <MinVer>6.12</MinVer>
   <License>MIT</License>
